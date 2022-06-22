@@ -1,4 +1,10 @@
 const user = require("../model/userModel");
+const accountSid = 'AC6cc61552253645cf39827a6f1edd52a7'; 
+const authToken = '602d8c9e5c17b2881305fb90c54a1b9c'; 
+const client = require('twilio')(accountSid, authToken); 
+const otpGenerator = require('otp-generator')
+
+
 
 exports.registerUser= async (req,res)=>{
  
@@ -13,7 +19,6 @@ exports.registerUser= async (req,res)=>{
     // console.log(users)
 
 }
-
 
 exports.updateUser = async (req,res)=>{
    const {email, mobile_no, googleId} = req.body;
@@ -81,3 +86,36 @@ exports.updateVendor = async (req,res)=>{
       })
    }
 }
+
+exports.loginUser = async(req,res)=>{
+   const otp = otpGenerator.generate(6, { upperCaseAlphabets: false,lowerCaseAlphabets:false, specialChars: false });
+   console.log(req.body)
+   client.messages 
+      .create({         
+         body: 'Hello from Rishabh',
+         from: '+19854972822',
+         to: '+917509699668' 
+       }) 
+      .then(message => console.log(message.sid)) 
+      .done();
+}
+
+exports.otpLogin= async (req,res)=>{
+   const {mobile_no} = req.body
+const mobile = await user.findOne({mobile_no:req.body.mobile_no})
+if(mobile){
+   const otp = otpGenerator.generate(6, { upperCaseAlphabets: false,lowerCaseAlphabets:false, specialChars: false });
+   console.log("otp code =>", otp)
+}else{
+   const otp = otpGenerator.generate(6, { upperCaseAlphabets: false,lowerCaseAlphabets:false, specialChars: false });
+   const users = await user.create({mobile_no:mobile_no, otp:otp})
+   console.log("otp code =>", otp, users)
+}
+console.log("mobile", mobile)
+}
+
+// ----------------------------------------------------------
+
+ 
+
+// ----------------------------------------------------------

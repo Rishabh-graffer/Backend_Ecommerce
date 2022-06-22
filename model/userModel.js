@@ -3,34 +3,41 @@ const mongoose = require("mongoose");
 const userSchema = mongoose.Schema({
     first_name:{
         type:String,
-        required:[true, "please enter First Name"]
+        // required:[true, "please enter First Name"]
     },
     last_name:{
         type:String,
-        required:[true, "please enter Last Name"]
+        // required:[true, "please enter Last Name"]
     },
     mobile_no:{
-        type:Number,
+        type:String,
         required:[true, "please enter mobile number"],
-        unique:true
+        unique:true,
+        immutable:true
     },
     gender:{
-        type:string,
-        required:[true, "please select your gender"]
+        type:String,
+        // required:[true, "please select your gender"]
     },
     email:{
         type:String,
-        required:[true, "please enter email address"],
-        unique:true
+        // required:[true, "please enter email address"],
+        unique:true,
+        immutable:true
+    },
+    googleId:{
+        type:String,
+        unique:true,
+        immutable:true
     },
     password:{
         type:String,
-        required:[true, "please enter password"],
+        // required:[true, "please enter password"],
         select:false
     },
     age:{
         type:Number,
-        required:[true, "please enter your age"]
+        // required:[true, "please enter your age"]
     },
     profile_pic:{
         type:String,
@@ -40,15 +47,16 @@ const userSchema = mongoose.Schema({
         default:false,
         select:false
     },
-    role_id:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"role"
+    role:{
+        type:String ,
+        immutable:true
     },
     otp:{
         type:Number,
         select:false
     },
-    createdAt:{timestamps:true},
+    // createdAt:{timestamp : true},
     updatedAt:Date
 })
 
+module.exports = mongoose.model("user", userSchema)
