@@ -3,7 +3,8 @@ const mongoose = require("mongoose")
 const storeSchema = mongoose.Schema({
     user_id:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"user"
+        ref:"user",
+        select:false
     },
     store_name:{
         type:String,
@@ -19,19 +20,19 @@ const storeSchema = mongoose.Schema({
     },
     city:{
         type:String,
-        required:[tru, "please select city"]
+        required:[true, "please select city"]
     },
     address_line_1:{
         type:String,
-        required:[true, "please provide your address line 1"]
+        // required:[true, "please provide your address line 1"]
     },
     address_line_2:{
         type:String,
-        required:[true, "please provide your address line 2"]
+        // required:[true, "please provide your address line 2"]
     },
     landmark:{
         type:String,
-        required:[true, "please provide your landmark"]
+        // required:[true, "please provide your landmark"]
     },
     geo_cordinates:{
        latitude:{type:String, required:[true, "please enter latitude"]},
@@ -49,7 +50,7 @@ const storeSchema = mongoose.Schema({
         type:Boolean,
         default:false
     },
-    createdAt:{timestamps:true},
+    createdAt:{type:Date, default:Date.now()},
     updatedAt:Date
 })
 

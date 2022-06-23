@@ -14,7 +14,7 @@ const productSchema = mongoose.Schema({
   },
   subcategory_id: {
     type: id,
-    ref: "category",
+    ref: "subcategory",
     required:[true, "please enter subcategory id"]
   },
   product_name: {
@@ -36,8 +36,7 @@ const productSchema = mongoose.Schema({
   stocks:{
     type:Number,
     default:1
-  },
-    timestamps: true
+  }
 });
 
 module.exports = mongoose.model("product", productSchema);
