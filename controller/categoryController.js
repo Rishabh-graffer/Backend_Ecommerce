@@ -1,6 +1,9 @@
 const category = require("../model/categoryModel");
 const admin = require("../model/adminModel");
-const adminRole = require("../middleware/adminRole")
+const adminRole = require("../middleware/adminRole");
+const error = require("../middleware/error");
+const ErrorHandler = require("../utils/errorHandler");
+const catchAsyncError = require("../middleware/catchAsyncError");
 
 exports.addCategory=async(req,res)=>{   
    let cat = await category.create(req.body);
@@ -25,7 +28,7 @@ exports.getCategory=async(req,res)=>{
     })
  }
 
- exports.updateCategory=async(req,res)=>{
+ exports.updateCategory=catchAsyncError( async(req,res,next)=>{
    const {id} = req.params
 
     let cat = await category.findById(id);
@@ -38,14 +41,13 @@ exports.getCategory=async(req,res)=>{
          message:"updated successfully",
       })
     }else{
-
     res.status(404).json({
        success:true,
        message:"no result found",
        data:cat
     })
    }
- }
+ })
 
  exports.deleteCategory=async(req,res)=>{
    const {id} = req.params;

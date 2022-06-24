@@ -29,6 +29,7 @@ const productSchema = mongoose.Schema({
     type: Number,
     required: [true, "please enter product price"],
   },
+  product_images:[],
   status: {
     type: Boolean,
     default: true,
@@ -36,6 +37,10 @@ const productSchema = mongoose.Schema({
   stocks:{
     type:Number,
     default:1
+  }, 
+  active:{
+    type:Boolean,
+    default:true
   }
 });
 
